@@ -4,7 +4,7 @@
   ocê pode usar um MultiDataTrigger para verificar várias condições, incluindo o nome do estilo de um Button. Aqui está um exemplo:
 
 xml
-Copy code
+
 ```xml
 <Window.Resources>
     <Style x:Key="MyButtonStyle" TargetType="Button">
@@ -37,4 +37,89 @@ Observe que as condições no MultiDataTrigger são verificadas em sequência, e
 
 
 
-Regenerate response
+## wpf - usando triggers 
+
+```xml
+ <!--solução funcional
+        http://mark-dot-net.blogspot.com/2007/07/creating-custom-wpf-button-template-in.html
+        //como criar templates https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/how-to-create-apply-template?view=netdesktop-7.0
+    
+        <ControlTemplate TargetType="Button"  x:Key="PrimaryButtonTemplate">
+        <Border Name="border"
+                       BorderThickness="1"
+                       Padding="4,2"
+                       BorderBrush="#0d6efd"
+                       CornerRadius="3"
+                       Background="{TemplateBinding Background}">
+            <Grid ShowGridLines="True">
+                <ContentPresenter 
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center" 
+                              
+                                Name="contentShadow"
+                                Style="{StaticResource ShadowStyle}">
+                    <ContentPresenter.RenderTransform>
+                        <TranslateTransform X="0.4" Y="0.4" />
+                    </ContentPresenter.RenderTransform>
+                </ContentPresenter>
+
+                <ContentPresenter HorizontalAlignment="Center"
+                           VerticalAlignment="Center" Name="content" Grid.Column="0"/>
+
+            </Grid>
+        </Border>
+        
+        <ControlTemplate.Triggers>
+            <!-- 
+            Multitriggers, ou seja, multigatilhos me permite adicionar como condicional varios gatilhos disparaados
+            https://social.msdn.microsoft.com/Forums/vstudio/en-US/f6816293-e531-4c4a-ba2f-d32f37d17f55/is-it-possible-to-reuse-a-trigger-on-multiple-controls-easily?forum=wpf-->
+
+    <Trigger Property="IsMouseOver" Value="True">
+
+        <Setter Property="Button.Background" Value="{StaticResource primaryColorOver}"/>
+        <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource primaryColorOverBorder}" />
+        <Setter Property="Foreground" Value="{StaticResource primaryColorOverFont}" />
+    </Trigger>
+
+
+    <Trigger Property="IsPressed" Value="True">
+        
+                            <Setter Property="Background" >
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{StaticResource defaultColorPress}" />
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
+                                        <GradientStop Color="SpringGreen" Offset="0.35"/>
+                                        <GradientStop Color="Green" Offset="0.95"/>
+                                        <GradientStop Color="SpringGreen" Offset="0.25"/>
+                                    </LinearGradientBrush>
+                                    
+                                </Setter.Value>
+                            </Setter>
+                                    
+        <Setter Property="Background" Value="{StaticResource primaryColorPress}"/>
+        <Setter TargetName="contentShadow" Property="RenderTransform" >
+            <Setter.Value>
+                <TranslateTransform Y="0.5" X="0.5" />
+            </Setter.Value>
+        </Setter>
+
+    </Trigger>
+
+
+    <Trigger Property="IsDefaulted" Value="True">
+        <Setter TargetName="border" Property="BorderBrush" Value="#FF282828" />
+    </Trigger>
+    <Trigger Property="IsFocused" Value="True">
+        <Setter TargetName="border" Property="BorderBrush" Value="#FF282828" />
+    </Trigger>
+
+    <Trigger Property="IsEnabled" Value="False">
+        <Setter TargetName="border" Property="Opacity" Value="0.7" />
+        <Setter Property="Foreground" Value="Gray" />
+    </Trigger>
+
+
+    </ControlTemplate.Triggers>
+    </ControlTemplate>-->
+    
+```
